@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
         } else if (score >= 1000)
         {
-
+            WinGames();
         }
     }
 
