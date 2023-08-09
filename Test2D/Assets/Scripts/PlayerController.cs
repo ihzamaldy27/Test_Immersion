@@ -38,17 +38,16 @@ public class PlayerController : MonoBehaviour
         if (movement.magnitude != 0)
             animator.SetTrigger("Run");
         else
+        {
             animator.SetTrigger("Idle");
+            animator.SetBool("Attack1", false);
+        }
 
-        if (movement.x > 0)
+            if (movement.x > 0)
             Filp(false);
         else
             Filp(true);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            animator.SetTrigger("Attack");
-        }
     }
 
     void Move()
@@ -69,17 +68,20 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             gm.AddScore(50);
         }
-        else if (collision.CompareTag("obstacle") && (isShield || isSword))
+        else if (collision.CompareTag("obstacle") &&  isSword)
         {
+            animator.SetBool("Attack1", true);
             Destroy(collision.gameObject);
             gm.AddScore(50);
+        }
+        else if (collision.CompareTag("obstacle") && isShield)
+        {
+            Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("obstacle") && (!isShield || !isSword))
         {
             gm.GameOver();
         }
-            
-        
     }
 
     public void OnSword()
